@@ -102,6 +102,84 @@ CREATE TABLE [tb_plantilla] (
 )
 GO
 
+
+/* Procedimientos Almacenados */
+
+-- Plantilla
+IF OBJECT_ID('SP_InsertPlantilla') IS NOT NULL
+DROP PROCEDURE SP_InsertPlantilla
+GO
+
+CREATE PROCEDURE SP_InsertPlantilla
+@codPlantilla		INT,
+@titulo		VARCHAR(120),
+@tipo		VARCHAR (100),
+@descripcion		VARCHAR (220),
+@codAsignatura		INT
+AS
+BEGIN
+		SET NOCOUNT ON;
+		INSERT INTO [tb_plantilla] VALUES (@codPlantilla, @titulo, @tipo, @descripcion,@codAsignatura);
+END
+GO
+
+IF OBJECT_ID('SP_DeletePlantilla') IS NOT NULL
+DROP PROCEDURE SP_DeletePlantilla
+GO
+
+CREATE PROCEDURE SP_DeletePlantilla
+@codPlantilla	INT
+AS
+BEGIN
+		SET NOCOUNT ON;
+		DELETE FROM [tb_plantilla] WHERE @codPlantilla = codPlantilla;
+END
+GO
+
+IF OBJECT_ID('SP_UpdatePlantilla') IS NOT NULL
+DROP PROCEDURE SP_UpdatePlantilla
+GO
+
+CREATE PROCEDURE SP_UpdatePlantilla
+@codPlantilla		INT,
+@titulo		VARCHAR(120),
+@tipo		VARCHAR (100),
+@descripcion		VARCHAR (220),
+@codAsignatura		INT
+AS
+BEGIN
+		SET NOCOUNT ON;
+		UPDATE [tb_plantilla] SET titulo = @titulo,
+								  tipo = @tipo,
+								  descripcion = @descripcion,
+								  codAsignatura = @codAsignatura
+								  WHERE codPlantilla = @codPlantilla;
+END
+GO
+
+IF OBJECT_ID('SP_SelectPlantilla') IS NOT NULL
+DROP PROCEDURE SP_SelectPlantilla
+GO
+
+CREATE PROCEDURE SP_SelectPlantilla
+@codPlantilla	INT
+AS
+BEGIN
+		SET NOCOUNT ON;
+		SELECT * FROM [tb_plantilla] WHERE codPlantilla = @codPlantilla;
+END
+GO
+
+IF OBJECT_ID('SP_SelectPlantillaAll') IS NOT NULL
+DROP PROCEDURE SP_SelectPlantillaAll
+GO
+
+CREATE PROCEDURE SP_SelectPlantillaAll
+AS
+		SELECT * FROM [tb_plantilla];
+GO
+/* Procedimientos Almacenados Terminados (Plantilla) */
+
 CREATE TABLE [tb_preguntas] (
   [codPregunta] INT PRIMARY KEY,
   [titulo] VARCHAR(120),
