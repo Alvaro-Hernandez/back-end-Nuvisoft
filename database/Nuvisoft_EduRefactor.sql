@@ -178,6 +178,7 @@ CREATE PROCEDURE SP_SelectPlantillaAll
 AS
 		SELECT * FROM [tb_plantilla];
 GO
+
 /* Procedimientos Almacenados Terminados (Plantilla) */
 
 CREATE TABLE [tb_preguntas] (
@@ -189,6 +190,85 @@ CREATE TABLE [tb_preguntas] (
   [codPlantilla] INT
 )
 GO
+
+/* Procedimientos Almacenados */
+-- Preguntas
+IF OBJECT_ID('SP_InsertPreguntas') IS NOT NULL
+DROP PROCEDURE SP_InsertPreguntas
+GO
+
+CREATE PROCEDURE SP_InsertPreguntas
+@codPregunta		INT,
+@titulo		VARCHAR(120),
+@tipo		VARCHAR (100),
+@puntaje	INT,
+@autoContestado	BIT,
+@codPlantilla INT	
+AS
+BEGIN
+		SET NOCOUNT ON;
+		INSERT INTO [tb_preguntas] VALUES (@codPregunta, @titulo, @tipo, @puntaje,@autoContestado,@codPlantilla);
+END
+GO
+
+IF OBJECT_ID('SP_DeletePreguntas') IS NOT NULL
+DROP PROCEDURE SP_DeletePreguntas
+GO
+
+CREATE PROCEDURE SP_DeletePreguntas
+@codPregunta	INT
+AS
+BEGIN
+		SET NOCOUNT ON;
+		DELETE FROM [tb_preguntas] WHERE @codPregunta = codPregunta;
+END
+GO
+
+IF OBJECT_ID('SP_UpdatePreguntas') IS NOT NULL
+DROP PROCEDURE SP_UpdatePreguntas
+GO
+
+CREATE PROCEDURE SP_UpdatePreguntas
+@codPregunta		INT,
+@titulo		VARCHAR(120),
+@tipo		VARCHAR (100),
+@puntaje	INT,
+@autoContestado	BIT,
+@codPlantilla INT	
+AS
+BEGIN
+		SET NOCOUNT ON;
+		UPDATE [tb_preguntas] SET titulo = @titulo,
+								  tipo = @tipo,
+								  puntaje = @puntaje,
+								  autoContestado = @autoContestado,
+								  codPlantilla = @codPlantilla
+								  WHERE codPregunta = @codPregunta;
+END
+GO
+
+IF OBJECT_ID('SP_SelectPregunta') IS NOT NULL
+DROP PROCEDURE SP_SelectPregunta
+GO
+
+CREATE PROCEDURE SP_SelectPregunta
+@codPregunta	INT
+AS
+BEGIN
+		SET NOCOUNT ON;
+		SELECT * FROM [tb_preguntas] WHERE codPregunta = @codPregunta;
+END
+GO
+
+IF OBJECT_ID('SP_SelectPreguntaAll') IS NOT NULL
+DROP PROCEDURE SP_SelectPreguntaAll
+GO
+
+CREATE PROCEDURE SP_SelectPreguntaAll
+AS
+		SELECT * FROM [tb_preguntas];
+GO
+/* Procedimientos Almacenados Terminados (Plantilla) */
 
 CREATE TABLE [tb_trabajo] (
   [codTrabajo] INT PRIMARY KEY,
