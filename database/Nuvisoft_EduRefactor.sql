@@ -278,6 +278,80 @@ CREATE TABLE [tb_trabajo] (
 )
 GO
 
+/* Procedimientos Almacenados */
+-- Trabajo
+
+IF OBJECT_ID('SP_InsertTrabajo') IS NOT NULL
+DROP PROCEDURE SP_InsertTrabajo
+GO
+
+CREATE PROCEDURE SP_InsertTrabajo
+@codTrabajo INT,
+@inicio DATETIME,
+@final DATETIME,
+@codPlantilla INT
+AS
+  BEGIN
+      SET NOCOUNT ON
+      INSERT INTO [tb_trabajo] VALUES(@codTrabajo,@inicio,@final,@codPlantilla);
+  END
+GO
+
+IF OBJECT_ID('SP_DeleteTrabajo') IS NOT NULL
+DROP PROCEDURE SP_DeleteTrabajo
+GO
+
+CREATE PROCEDURE SP_DeleteTrabajo
+@codTrabajo	INT
+AS
+BEGIN
+		SET NOCOUNT ON;
+		DELETE FROM [tb_trabajo] WHERE @codTrabajo = codTrabajo;
+END
+GO
+
+IF OBJECT_ID('SP_UpdateTrabajo') IS NOT NULL
+DROP PROCEDURE SP_UpdatePreguntas
+GO
+
+CREATE PROCEDURE SP_UpdateTrabajo
+@codTrabajo INT,
+@inicio DATETIME,
+@final DATETIME,
+@codPlantilla INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE [tb_trabajo] SET inicio = @inicio,
+                  final = @final,
+                  codPlantilla = @codPlantilla
+                  WHERE codTrabajo = @codTrabajo
+END
+GO
+
+IF OBJECT_ID('SP_SelectTrabajo') IS NOT NULL
+DROP PROCEDURE SP_SelectTrabajo
+GO
+
+CREATE PROCEDURE SP_SelectTrabajo
+@codTrabajo	INT
+AS
+BEGIN
+		SET NOCOUNT ON;
+		SELECT * FROM [tb_trabajo] WHERE codTrabajo = @codTrabajo;
+END
+GO
+
+IF OBJECT_ID('SP_SelectTrabajoAll') IS NOT NULL
+DROP PROCEDURE SP_SelectTrabajoAll
+GO
+
+CREATE PROCEDURE SP_SelectTrabajoAll
+AS
+		SELECT * FROM [tb_trabajo];
+GO
+/* Procedimientos Almacenados Terminados (Trabajo) */
+
 CREATE TABLE [tb_respuestas] (
   [codRespuestas] INT PRIMARY KEY,
   [descripcion] VARCHAR(255),
