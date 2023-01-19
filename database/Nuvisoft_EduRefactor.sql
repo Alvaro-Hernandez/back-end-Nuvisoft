@@ -613,6 +613,77 @@ CREATE TABLE [tb_asignatura] (
 )
 GO
 
+/* Procedimientos Almacenados */
+-- Asignatura
+
+IF OBJECT_ID('SP_InsertAsignatura') IS NOT NULL
+DROP PROCEDURE SP_InsertAsignatura
+GO
+
+CREATE PROCEDURE SP_InsertAsignatura
+@codAsignatura INT,
+@nombre VARCHAR(80),
+@descripcion VARCHAR(200)
+AS
+  BEGIN
+      SET NOCOUNT ON
+      INSERT INTO [tb_asignatura] VALUES(@codAsignatura, @nombre, @descripcion);
+  END
+GO
+
+IF OBJECT_ID('SP_DeleteAsignatura') IS NOT NULL
+DROP PROCEDURE SP_DeleteAsignatura
+GO
+
+CREATE PROCEDURE SP_DeleteAsignatura
+@codAsignatura	INT
+AS
+BEGIN
+		SET NOCOUNT ON;
+		DELETE FROM [tb_asignatura] WHERE @codAsignatura = codAsignatura;
+END
+GO
+
+IF OBJECT_ID('SP_UpdateAsignatura') IS NOT NULL
+DROP PROCEDURE SP_UpdateAsignatura
+GO
+
+CREATE PROCEDURE SP_UpdateAsignatura
+@codAsignatura INT,
+@nombre VARCHAR(80),
+@descripcion VARCHAR(200)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE [tb_asignatura] SET nombre = @nombre,
+                        descripcion = @descripcion
+                  WHERE codAsignatura = @codAsignatura
+END
+GO
+
+IF OBJECT_ID('SP_SelectAsignatura') IS NOT NULL
+DROP PROCEDURE SP_SelectAsignatura
+GO
+
+CREATE PROCEDURE SP_SelectAsignatura
+@codAsignatura	INT
+AS
+BEGIN
+		SET NOCOUNT ON;
+		SELECT * FROM [tb_asignatura] WHERE codAsignatura = @codAsignatura;
+END
+GO
+
+IF OBJECT_ID('SP_SelectAsignaturaAll') IS NOT NULL
+DROP PROCEDURE SP_SelectAsignaturaAll
+GO
+
+CREATE PROCEDURE SP_SelectAsignaturaAll
+AS
+		SELECT * FROM [tb_asignatura];
+GO
+/* Procedimientos Almacenados Terminados (Asignatura) */
+
 CREATE TABLE [tba_horario_asignatura] (
   [codHorarioAsig] INT PRIMARY KEY,
   [codAsignatura] INT,
