@@ -87,6 +87,77 @@ CREATE TABLE [tba_privilegios] (
 )
 GO
 
+/* Procedimientos Almacenados */
+-- Privilegios
+
+IF OBJECT_ID('SP_InsertPrivilegios') IS NOT NULL
+DROP PROCEDURE SP_InsertPrivilegios
+GO
+
+CREATE PROCEDURE SP_InsertPrivilegios
+@codPrivilegios INT,
+@codRol INT,
+@codUsuario INT
+AS
+  BEGIN
+      SET NOCOUNT ON
+      INSERT INTO [tba_privilegios] VALUES(@codPrivilegios,@codRol, @codUsuario);
+  END
+GO
+
+IF OBJECT_ID('SP_DeletePrivilegio') IS NOT NULL
+DROP PROCEDURE SP_DeletePrivilegio
+GO
+
+CREATE PROCEDURE SP_DeletePrivilegio
+@codPrivilegios	INT
+AS
+BEGIN
+		SET NOCOUNT ON;
+		DELETE FROM [tba_privilegios] WHERE @codPrivilegios = codPrivilegios;
+END
+GO
+
+IF OBJECT_ID('SP_UpdatePrivilegios') IS NOT NULL
+DROP PROCEDURE SP_UpdatePrivilegios
+GO
+
+CREATE PROCEDURE SP_UpdatePrivilegios
+@codPrivilegios INT,
+@codRol INT,
+@codUsuario INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE [tba_privilegios] SET codRol = @codRol,
+                        codUsuario = @codUsuario
+                  WHERE codPrivilegios = @codPrivilegios
+END
+GO
+
+IF OBJECT_ID('SP_SelectPrivilegio') IS NOT NULL
+DROP PROCEDURE SP_SelectPrivilegio
+GO
+
+CREATE PROCEDURE SP_SelectPrivilegio
+@codPrivilegios	INT
+AS
+BEGIN
+		SET NOCOUNT ON;
+		SELECT * FROM [tba_privilegios] WHERE codPrivilegios = @codPrivilegios;
+END
+GO
+
+IF OBJECT_ID('SP_SelectPrivilegiosAll') IS NOT NULL
+DROP PROCEDURE SP_SelectPrivilegiosAll
+GO
+
+CREATE PROCEDURE SP_SelectPrivilegiosAll
+AS
+		SELECT * FROM [tba_privilegios];
+GO
+/* Procedimientos Almacenados Terminados (Privilegios) */
+
 CREATE TABLE [tba_privilegios_asignatura] (
   [codPrivilegiosAsignatura] INT PRIMARY KEY,
   [codPrivilegios] INT,
