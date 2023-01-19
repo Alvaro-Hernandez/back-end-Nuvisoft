@@ -248,6 +248,92 @@ CREATE TABLE [tb_usuario] (
 )
 GO
 
+/* Procedimientos Almacenados */
+-- Usuario
+
+IF OBJECT_ID('SP_InsertUsuario') IS NOT NULL
+DROP PROCEDURE SP_InsertUsuario
+GO
+
+CREATE PROCEDURE SP_InsertUsuario
+@codUsuario INT,
+@codColegio INT,
+@nombres VARCHAR(120),
+@apellidos VARCHAR(120),
+@email VARCHAR(120),
+@usuario VARCHAR(18),
+@contrasena VARCHAR(25),
+@dni VARCHAR(14)
+AS
+  BEGIN
+      SET NOCOUNT ON
+      INSERT INTO [tb_usuario] VALUES(@codUsuario,@codColegio, @nombres, @apellidos, @email, @usuario, @contrasena,@dni);
+  END
+GO
+
+IF OBJECT_ID('SP_DeleteUsuario') IS NOT NULL
+DROP PROCEDURE SP_DeleteUsuario
+GO
+
+CREATE PROCEDURE SP_DeleteUsuario
+@codUsuario	INT
+AS
+BEGIN
+		SET NOCOUNT ON;
+		DELETE FROM [tb_usuario] WHERE @codUsuario = codUsuario;
+END
+GO
+
+IF OBJECT_ID('SP_UpdateUsuario') IS NOT NULL
+DROP PROCEDURE SP_UpdateUsuario
+GO
+
+CREATE PROCEDURE SP_UpdateUsuario
+@codUsuario INT,
+@codColegio INT,
+@nombres VARCHAR(120),
+@apellidos VARCHAR(120),
+@email VARCHAR(120),
+@usuario VARCHAR(18),
+@contrasena VARCHAR(25),
+@dni VARCHAR(14)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE [tb_usuario] SET codColegio = @codColegio,
+                        nombres = @nombres,
+                        apellidos = @apellidos,
+                        email = @email,
+                        usuario = @usuario,
+                        contrasena = @contrasena,
+                        dni = @dni
+                  WHERE codUsuario = @codUsuario
+END
+GO
+
+IF OBJECT_ID('SP_SelectUsuario') IS NOT NULL
+DROP PROCEDURE SP_SelectUsuario
+GO
+
+CREATE PROCEDURE SP_SelectUsuario
+@codUsuario	INT
+AS
+BEGIN
+		SET NOCOUNT ON;
+		SELECT * FROM [tb_usuario] WHERE codUsuario = @codUsuario;
+END
+GO
+
+IF OBJECT_ID('SP_SelectUsuarioAll') IS NOT NULL
+DROP PROCEDURE SP_SelectUsuarioAll
+GO
+
+CREATE PROCEDURE SP_SelectUsuarioAll
+AS
+		SELECT * FROM [tb_usuario];
+GO
+/* Procedimientos Almacenados Terminados (Usuario) */
+
 CREATE TABLE [tb_colegio] (
   [codColegio] INT PRIMARY KEY,
   [nombre] VARCHAR(100),
