@@ -691,6 +691,77 @@ CREATE TABLE [tba_horario_asignatura] (
 )
 GO
 
+/* Procedimientos Almacenados */
+-- Horario Asignatura
+
+IF OBJECT_ID('SP_InsertHorarioAsigna') IS NOT NULL
+DROP PROCEDURE SP_InsertHorarioAsigna
+GO
+
+CREATE PROCEDURE SP_InsertHorarioAsigna
+@codHorarioAsig INT,
+@codAsignatura INT,
+@codHorario INT
+AS
+  BEGIN
+      SET NOCOUNT ON
+      INSERT INTO [tba_horario_asignatura] VALUES(@codHorarioAsig, @codAsignatura, @codHorario);
+  END
+GO
+
+IF OBJECT_ID('SP_DeleteHorarioAsigna') IS NOT NULL
+DROP PROCEDURE SP_DeleteHorarioAsigna
+GO
+
+CREATE PROCEDURE SP_DeleteHorarioAsigna
+@codHorarioAsig	INT
+AS
+BEGIN
+		SET NOCOUNT ON;
+		DELETE FROM [tba_horario_asignatura] WHERE @codHorarioAsig = codHorarioAsig;
+END
+GO
+
+IF OBJECT_ID('SP_UpdateHorarioAsignatura') IS NOT NULL
+DROP PROCEDURE SP_UpdateHorarioAsignatura
+GO
+
+CREATE PROCEDURE SP_UpdateHorarioAsignatura
+@codHorarioAsig INT,
+@codAsignatura INT,
+@codHorario INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE [tba_horario_asignatura] SET codAsignatura = @codAsignatura,
+                        codHorario = @codHorario
+                  WHERE codHorarioAsig = @codHorarioAsig
+END
+GO
+
+IF OBJECT_ID('SP_SelectHorarioAsigna') IS NOT NULL
+DROP PROCEDURE SP_SelectHorarioAsigna
+GO
+
+CREATE PROCEDURE SP_SelectHorarioAsigna
+@codHorarioAsig	INT
+AS
+BEGIN
+		SET NOCOUNT ON;
+		SELECT * FROM [tba_horario_asignatura] WHERE codHorarioAsig = @codHorarioAsig;
+END
+GO
+
+IF OBJECT_ID('SP_SelectHorarioAsignaAll') IS NOT NULL
+DROP PROCEDURE SP_SelectHorarioAsignaAll
+GO
+
+CREATE PROCEDURE SP_SelectHorarioAsignaAll
+AS
+		SELECT * FROM [tba_horario_asignatura];
+GO
+/* Procedimientos Almacenados Terminados (Horario Asignatura) */
+
 CREATE TABLE [tb_horario] (
   [codHorario] INT PRIMARY KEY,
   [nombre] VARCHAR(120),
@@ -768,7 +839,7 @@ CREATE PROCEDURE SP_SelectHorarioAll
 AS
 		SELECT * FROM [tb_horario];
 GO
-/* Procedimientos Almacenados Terminados (Aranceles) */
+/* Procedimientos Almacenados Terminados (Horario) */
 
 CREATE TABLE [tb_plantilla] (
   [codPlantilla] INT PRIMARY KEY,
