@@ -440,6 +440,24 @@ CREATE TABLE [tb_aranceles] (
 )
 GO
 
+/* Procedimientos Almacenados */
+-- Aranceles
+
+IF OBJECT_ID('SP_InsertAranceles') IS NOT NULL
+DROP PROCEDURE SP_InsertAranceles
+GO
+
+CREATE PROCEDURE SP_InsertAranceles
+@codAranceles INT,
+@codUsuario INT,
+@estado VARCHAR(100),
+AS
+  BEGIN
+      SET NOCOUNT ON
+      INSERT INTO [tb_aranceles] VALUES(@codAranceles, @codUsuario,@estado);
+  END
+GO
+
 CREATE TABLE [tba_detalles] (
   [codArancelesDetalles] INT PRIMARY KEY,
   [codAranceles] INT,
