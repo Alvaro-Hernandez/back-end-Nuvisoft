@@ -699,6 +699,77 @@ CREATE TABLE [tb_horario] (
 )
 GO
 
+/* Procedimientos Almacenados */
+-- Horario
+
+IF OBJECT_ID('SP_InsertHorario') IS NOT NULL
+DROP PROCEDURE SP_InsertHorario
+GO
+
+CREATE PROCEDURE SP_InsertHorario
+@codHorario INT,
+@nombre VARCHAR(120),
+@modalidad VARCHAR(100)
+AS
+  BEGIN
+      SET NOCOUNT ON
+      INSERT INTO [tb_horario] VALUES(@codHorario, @nombre, @modalidad);
+  END
+GO
+
+IF OBJECT_ID('SP_DeleteHorario') IS NOT NULL
+DROP PROCEDURE SP_DeleteHorario
+GO
+
+CREATE PROCEDURE SP_DeleteHorario
+@codHorario	INT
+AS
+BEGIN
+		SET NOCOUNT ON;
+		DELETE FROM [tb_horario] WHERE @codHorario = codHorario;
+END
+GO
+
+IF OBJECT_ID('SP_UpdateHorario') IS NOT NULL
+DROP PROCEDURE SP_UpdateHorario
+GO
+
+CREATE PROCEDURE SP_UpdateHorario
+@codHorario INT,
+@nombre VARCHAR(120),
+@modalidad VARCHAR(100)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE [tb_horario] SET nombre = @nombre,
+                        modalidad = @modalidad
+                  WHERE codHorario = @codHorario
+END
+GO
+
+IF OBJECT_ID('SP_SelectHorario') IS NOT NULL
+DROP PROCEDURE SP_SelectHorario
+GO
+
+CREATE PROCEDURE SP_SelectHorario
+@codHorario	INT
+AS
+BEGIN
+		SET NOCOUNT ON;
+		SELECT * FROM [tb_horario] WHERE codHorario = @codHorario;
+END
+GO
+
+IF OBJECT_ID('SP_SelectHorarioAll') IS NOT NULL
+DROP PROCEDURE SP_SelectHorarioAll
+GO
+
+CREATE PROCEDURE SP_SelectHorarioAll
+AS
+		SELECT * FROM [tb_horario];
+GO
+/* Procedimientos Almacenados Terminados (Aranceles) */
+
 CREATE TABLE [tb_plantilla] (
   [codPlantilla] INT PRIMARY KEY,
   [titulo] VARCHAR(120),
