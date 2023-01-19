@@ -12,6 +12,74 @@ CREATE TABLE [tb_rol] (
 )
 GO
 
+/* Procedimientos Almacenados */
+-- Rol
+
+IF OBJECT_ID('SP_InsertRol') IS NOT NULL
+DROP PROCEDURE SP_InsertRol
+GO
+
+CREATE PROCEDURE SP_InsertRol
+@codRol INT,
+@rol VARCHAR(20)
+AS
+  BEGIN
+      SET NOCOUNT ON
+      INSERT INTO [tb_rol] VALUES(@codRol, @rol);
+  END
+GO
+
+IF OBJECT_ID('SP_DeleteRol') IS NOT NULL
+DROP PROCEDURE SP_DeleteRol
+GO
+
+CREATE PROCEDURE SP_DeleteRol
+@codRol	INT
+AS
+BEGIN
+		SET NOCOUNT ON;
+		DELETE FROM [tb_rol] WHERE @codRol = codRol;
+END
+GO
+
+IF OBJECT_ID('SP_UpdateRol') IS NOT NULL
+DROP PROCEDURE SP_UpdateRol
+GO
+
+CREATE PROCEDURE SP_UpdateRol
+@codRol INT,
+@rol VARCHAR(20)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE [tb_rol] SET rol = @rol
+                  WHERE codRol = @codRol
+END
+GO
+
+IF OBJECT_ID('SP_SelectRol') IS NOT NULL
+DROP PROCEDURE SP_SelectRol
+GO
+
+CREATE PROCEDURE SP_SelectRol
+@codRol	INT
+AS
+BEGIN
+		SET NOCOUNT ON;
+		SELECT * FROM [tb_rol] WHERE codRol = @codRol;
+END
+GO
+
+IF OBJECT_ID('SP_SelectRolAll') IS NOT NULL
+DROP PROCEDURE SP_SelectRolAll
+GO
+
+CREATE PROCEDURE SP_SelectRolAll
+AS
+		SELECT * FROM [tb_rol];
+GO
+/* Procedimientos Almacenados Terminados (Rol) */
+
 CREATE TABLE [tba_privilegios] (
   [codPrivilegios] INT PRIMARY KEY,
   [codRol] INT,
