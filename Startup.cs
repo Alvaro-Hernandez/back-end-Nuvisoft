@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BackEnd_NuvisoftEducation.Conexion;
 
 namespace BackEnd_NuvisoftEducation
 {
@@ -23,7 +24,9 @@ namespace BackEnd_NuvisoftEducation
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddRazorPages();
+            services.AddControllers();
+            services.AddSingleton<IConfiguration>(Configuration);
+            Global.ConnectionString = Configuration.GetConnectionString("Nuvisoft_Educacion");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

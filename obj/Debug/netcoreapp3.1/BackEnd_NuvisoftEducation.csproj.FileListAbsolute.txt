@@ -1,0 +1,9 @@
+D:\BackEnd_NuvisoftEducation\obj\Debug\netcoreapp3.1\BackEnd_NuvisoftEducation.csproj.AssemblyReference.cache
+D:\BackEnd_NuvisoftEducation\obj\Debug\netcoreapp3.1\BackEnd_NuvisoftEducation.GeneratedMSBuildEditorConfig.editorconfig
+D:\BackEnd_NuvisoftEducation\obj\Debug\netcoreapp3.1\BackEnd_NuvisoftEducation.AssemblyInfoInputs.cache
+D:\BackEnd_NuvisoftEducation\obj\Debug\netcoreapp3.1\BackEnd_NuvisoftEducation.AssemblyInfo.cs
+D:\BackEnd_NuvisoftEducation\obj\Debug\netcoreapp3.1\BackEnd_NuvisoftEducation.csproj.CoreCompileInputs.cache
+D:\BackEnd_NuvisoftEducation\obj\Debug\netcoreapp3.1\BackEnd_NuvisoftEducation.MvcApplicationPartsAssemblyInfo.cs
+D:\BackEnd_NuvisoftEducation\obj\Debug\netcoreapp3.1\BackEnd_NuvisoftEducation.MvcApplicationPartsAssemblyInfo.cache
+D:\BackEnd_NuvisoftEducation\obj\Debug\netcoreapp3.1\BackEnd_NuvisoftEducation.RazorAssemblyInfo.cache
+D:\BackEnd_NuvisoftEducation\obj\Debug\netcoreapp3.1\BackEnd_NuvisoftEducation.RazorAssemblyInfo.cs
