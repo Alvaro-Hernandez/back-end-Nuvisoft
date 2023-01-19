@@ -450,13 +450,66 @@ GO
 CREATE PROCEDURE SP_InsertAranceles
 @codAranceles INT,
 @codUsuario INT,
-@estado VARCHAR(100),
+@estado VARCHAR(100)
 AS
   BEGIN
       SET NOCOUNT ON
-      INSERT INTO [tb_aranceles] VALUES(@codAranceles, @codUsuario,@estado);
+      INSERT INTO [tb_aranceles] VALUES(@codAranceles, @codUsuario, @estado);
   END
 GO
+
+IF OBJECT_ID('SP_DeleteAranceles') IS NOT NULL
+DROP PROCEDURE SP_DeleteAranceles
+GO
+
+CREATE PROCEDURE SP_DeleteAranceles
+@codAranceles	INT
+AS
+BEGIN
+		SET NOCOUNT ON;
+		DELETE FROM [tb_aranceles] WHERE @codAranceles = codAranceles;
+END
+GO
+
+IF OBJECT_ID('SP_UpdateAranceles') IS NOT NULL
+DROP PROCEDURE SP_UpdateAranceles
+GO
+
+CREATE PROCEDURE SP_UpdateAranceles
+@codAranceles INT,
+@codUsuario INT,
+@estado VARCHAR(100)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE [tb_aranceles] SET codUsuario = @codUsuario,
+                        estado = @estado
+                  WHERE codAranceles = @codAranceles
+END
+GO
+
+IF OBJECT_ID('SP_SelectArancel') IS NOT NULL
+DROP PROCEDURE SP_SelectArancel
+GO
+
+CREATE PROCEDURE SP_SelectArancel
+@codAranceles	INT
+AS
+BEGIN
+		SET NOCOUNT ON;
+		SELECT * FROM [tb_aranceles] WHERE codAranceles = @codAranceles;
+END
+GO
+
+IF OBJECT_ID('SP_SelectArancelAll') IS NOT NULL
+DROP PROCEDURE SP_SelectArancelAll
+GO
+
+CREATE PROCEDURE SP_SelectArancelAll
+AS
+		SELECT * FROM [tb_aranceles];
+GO
+/* Procedimientos Almacenados Terminados (Aranceles) */
 
 CREATE TABLE [tba_detalles] (
   [codArancelesDetalles] INT PRIMARY KEY,
@@ -469,6 +522,89 @@ CREATE TABLE [tba_detalles] (
   CONSTRAINT Chk_EstadoDet CHECK ([estado] IN ('pagado', 'adeudo')),
 )
 GO
+
+/* Procedimientos Almacenados */
+-- Detalles
+
+IF OBJECT_ID('SP_InsertDetalles') IS NOT NULL
+DROP PROCEDURE SP_InsertDetalles
+GO
+
+CREATE PROCEDURE SP_InsertDetalles
+@codArancelesDetalles INT,
+@codAranceles INT,
+@estado VARCHAR(100),
+@vencimiento DATE,
+@cancelacion BIT,
+@concepto VARCHAR(255),
+@monto INT
+AS
+  BEGIN
+      SET NOCOUNT ON
+      INSERT INTO [tba_detalles] VALUES(@codArancelesDetalles, @codAranceles, @estado, @vencimiento, @cancelacion, @concepto, @monto);
+  END
+GO
+
+IF OBJECT_ID('SP_DeleteDetalles') IS NOT NULL
+DROP PROCEDURE SP_DeleteDetalles
+GO
+
+CREATE PROCEDURE SP_DeleteDetalles
+@codArancelesDetalles	INT
+AS
+BEGIN
+		SET NOCOUNT ON;
+		DELETE FROM [tba_detalles] WHERE @codArancelesDetalles = codArancelesDetalles;
+END
+GO
+
+IF OBJECT_ID('SP_UpdateDetalles') IS NOT NULL
+DROP PROCEDURE SP_UpdateDetalles
+GO
+
+CREATE PROCEDURE SP_UpdateDetalles
+@codArancelesDetalles INT,
+@codAranceles INT,
+@estado VARCHAR(100),
+@vencimiento DATE,
+@cancelacion BIT,
+@concepto VARCHAR(255),
+@monto INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE [tba_detalles] SET codAranceles = @codAranceles,
+                        estado = @estado,
+                        vencimiento = @vencimiento,
+                        cancelacion = @cancelacion,
+                        concepto = @concepto,
+                        monto = @monto
+                  WHERE codArancelesDetalles = @codArancelesDetalles
+END
+GO
+
+IF OBJECT_ID('SP_SelectDetalle') IS NOT NULL
+DROP PROCEDURE SP_SelectDetalle
+GO
+
+CREATE PROCEDURE SP_SelectDetalle
+@codArancelesDetalles	INT
+AS
+BEGIN
+		SET NOCOUNT ON;
+		SELECT * FROM [tba_detalles] WHERE codArancelesDetalles = @codArancelesDetalles;
+END
+GO
+
+IF OBJECT_ID('SP_SelectDetallesAll') IS NOT NULL
+DROP PROCEDURE SP_SelectDetallesAll
+GO
+
+CREATE PROCEDURE SP_SelectDetallesAll
+AS
+		SELECT * FROM [tba_detalles];
+GO
+/* Procedimientos Almacenados Terminados (Aranceles Detalles) */
 
 CREATE TABLE [tb_asignatura] (
   [codAsignatura] INT PRIMARY KEY,
