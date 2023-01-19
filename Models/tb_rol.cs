@@ -5,6 +5,7 @@
     {
         public int codRol { get; set; }
         public tipoRol rol { get; set; }
+        public string Error { get; set; }
     }
     public enum tipoRol
     {

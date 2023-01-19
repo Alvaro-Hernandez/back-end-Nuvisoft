@@ -11,37 +11,55 @@ namespace BackEnd_NuvisoftEducation.Controllers
     [ApiController]
     public class RolController : ControllerBase
     {
+        private IRolService _oRolService;
 
-        // GET: api/<RolController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        public RolController(IRolService oRolService)
         {
-            return new string[] { "value1", "value2" };
+            _oRolService = oRolService;
         }
 
-        // GET api/<RolController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        // GET: api/<GetRolList>
+        [HttpGet(Name = "GetRolList")]
+        public IEnumerable<tb_rol> GetRolList()
         {
-            return "value";
+            return _oRolService.GetRolList();
         }
 
-        // POST api/<RolController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+        // GET api/<GetRolId>/5
+        [HttpGet("{id}", Name ="GetRolId")]
+        public tb_rol GetRolId(int id)
         {
+            return _oRolService.GetRolId(id);
         }
 
-        // PUT api/<RolController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        // POST api/<PostRol>
+        [HttpPost(Name = "PostRol")]
+        public void PostRol([FromBody] tb_rol rol)
         {
+            if (ModelState.IsValid)
+            {
+                _oRolService.AddRol(rol);
+            }
+        }
+
+        // PUT api/<PutRol>/5
+        [HttpPut("{id}", Name ="PutRol")]
+        public void PutRol([FromBody] tb_rol rolUpdate)
+        {
+            if (ModelState.IsValid)
+            {
+                _oRolService.UpdateRol(rolUpdate);
+            }
         }
 
         // DELETE api/<RolController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{id}", Name ="DeleteRol")]
+        public void DeleteRol(int id)
         {
+            if(id != 0)
+            {
+                _oRolService.DeleteRol(id);
+            }
         }
     }
 }
