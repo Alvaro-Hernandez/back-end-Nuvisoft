@@ -165,6 +165,77 @@ CREATE TABLE [tba_privilegios_asignatura] (
 )
 GO
 
+/* Procedimientos Almacenados */
+-- Privilegios Asignatura
+
+IF OBJECT_ID('SP_InsertPrivilegiosAsignatura') IS NOT NULL
+DROP PROCEDURE SP_InsertPrivilegiosAsignatura
+GO
+
+CREATE PROCEDURE SP_InsertPrivilegiosAsignatura
+@codPrivilegiosAsignatura INT,
+@codPrivilegios INT,
+@codAsignatura INT
+AS
+  BEGIN
+      SET NOCOUNT ON
+      INSERT INTO [tba_privilegios_asignatura] VALUES(@codPrivilegiosAsignatura,@codPrivilegios, @codAsignatura);
+  END
+GO
+
+IF OBJECT_ID('SP_DeletePrivilegioAsignatura') IS NOT NULL
+DROP PROCEDURE SP_DeletePrivilegioAsignatura
+GO
+
+CREATE PROCEDURE SP_DeletePrivilegioAsignatura
+@codPrivilegiosAsignatura	INT
+AS
+BEGIN
+		SET NOCOUNT ON;
+		DELETE FROM [tba_privilegios_asignatura] WHERE @codPrivilegiosAsignatura = codPrivilegiosAsignatura;
+END
+GO
+
+IF OBJECT_ID('SP_UpdatePrivilegiosAsignatura') IS NOT NULL
+DROP PROCEDURE SP_UpdatePrivilegiosAsignatura
+GO
+
+CREATE PROCEDURE SP_UpdatePrivilegiosAsignatura
+@codPrivilegiosAsignatura INT,
+@codPrivilegios INT,
+@codAsignatura INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE [tba_privilegios_asignatura] SET codPrivilegios = @codPrivilegios,
+                        codAsignatura = @codAsignatura
+                  WHERE codPrivilegiosAsignatura = @codPrivilegiosAsignatura
+END
+GO
+
+IF OBJECT_ID('SP_SelectPrivilegioAsignatura') IS NOT NULL
+DROP PROCEDURE SP_SelectPrivilegioAsignatura
+GO
+
+CREATE PROCEDURE SP_SelectPrivilegioAsignatura
+@codPrivilegiosAsignatura	INT
+AS
+BEGIN
+		SET NOCOUNT ON;
+		SELECT * FROM [tba_privilegios_asignatura] WHERE codPrivilegiosAsignatura = @codPrivilegiosAsignatura;
+END
+GO
+
+IF OBJECT_ID('SP_SelectPrivilegiosAsignaturaAll') IS NOT NULL
+DROP PROCEDURE SP_SelectPrivilegiosAsignaturaAll
+GO
+
+CREATE PROCEDURE SP_SelectPrivilegiosAsignaturaAll
+AS
+		SELECT * FROM [tba_privilegios_asignatura];
+GO
+/* Procedimientos Almacenados Terminados (Privilegios Asignatura) */
+
 CREATE TABLE [tb_usuario] (
   [codUsuario] INT PRIMARY KEY,
   [codColegio] INT,
