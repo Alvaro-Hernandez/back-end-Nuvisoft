@@ -346,6 +346,92 @@ CREATE TABLE [tb_colegio] (
 )
 GO
 
+/* Procedimientos Almacenados */
+-- Colegio
+
+IF OBJECT_ID('SP_InsertColegio') IS NOT NULL
+DROP PROCEDURE SP_InsertColegio
+GO
+
+CREATE PROCEDURE SP_InsertColegio
+@codColegio INT,
+@nombre VARCHAR(100),
+@descripcion VARCHAR(255),
+@ubicacion VARCHAR(180),
+@direccion VARCHAR(180),
+@logotipo VARCHAR(200),
+@correo VARCHAR(50),
+@telefono VARCHAR(12)
+AS
+  BEGIN
+      SET NOCOUNT ON
+      INSERT INTO [tb_colegio] VALUES(@codColegio, @nombre, @descripcion, @ubicacion, @direccion, @logotipo, @correo, @telefono);
+  END
+GO
+
+IF OBJECT_ID('SP_DeleteColegio') IS NOT NULL
+DROP PROCEDURE SP_DeleteColegio
+GO
+
+CREATE PROCEDURE SP_DeleteColegio
+@codColegio	INT
+AS
+BEGIN
+		SET NOCOUNT ON;
+		DELETE FROM [tb_colegio] WHERE @codColegio = codColegio;
+END
+GO
+
+IF OBJECT_ID('SP_UpdateColegio') IS NOT NULL
+DROP PROCEDURE SP_UpdateColegio
+GO
+
+CREATE PROCEDURE SP_UpdateColegio
+@codColegio INT,
+@nombre VARCHAR(100),
+@descripcion VARCHAR(255),
+@ubicacion VARCHAR(180),
+@direccion VARCHAR(180),
+@logotipo VARCHAR(200),
+@correo VARCHAR(50),
+@telefono VARCHAR(12)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE [tb_colegio] SET nombre = @nombre,
+                        descripcion = @descripcion,
+                        ubicacion = @ubicacion,
+                        direccion = @direccion,
+                        logotipo = @logotipo,
+                        correo = @correo,
+                        telefono = @telefono
+                  WHERE codColegio = @codColegio
+END
+GO
+
+IF OBJECT_ID('SP_SelectColegio') IS NOT NULL
+DROP PROCEDURE SP_SelectColegio
+GO
+
+CREATE PROCEDURE SP_SelectColegio
+@codColegio	INT
+AS
+BEGIN
+		SET NOCOUNT ON;
+		SELECT * FROM [tb_colegio] WHERE codColegio = @codColegio;
+END
+GO
+
+IF OBJECT_ID('SP_SelectColegioAll') IS NOT NULL
+DROP PROCEDURE SP_SelectColegioAll
+GO
+
+CREATE PROCEDURE SP_SelectColegioAll
+AS
+		SELECT * FROM [tb_colegio];
+GO
+/* Procedimientos Almacenados Terminados (Colegio) */
+
 CREATE TABLE [tb_aranceles] (
   [codAranceles] INT PRIMARY KEY,
   [codUsuario] INT,
