@@ -432,6 +432,7 @@ CREATE PROCEDURE SP_SelectRespuestaAll
 AS
 		SELECT * FROM [tb_respuestas];
 GO
+/* Procedimientos Almacenados Terminados (Respuestas) */
 
 --Llaves Foraneas
 ALTER TABLE [tba_privilegios] ADD FOREIGN KEY ([codRol]) REFERENCES [tb_rol] ([codRol])
