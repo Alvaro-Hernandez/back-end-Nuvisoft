@@ -360,6 +360,80 @@ CREATE TABLE [tb_respuestas] (
 )
 GO
 
+/* Procedimientos Almacenados */
+-- Respuestas
+
+IF OBJECT_ID('SP_InsertRespuesta') IS NOT NULL
+DROP PROCEDURE SP_InsertRespuesta
+GO
+
+CREATE PROCEDURE SP_InsertRespuesta
+@codRespuestas INT,
+@descripcion VARCHAR(255),
+@correcta BIT,
+@codPregunta INT
+AS
+  BEGIN
+      SET NOCOUNT ON
+      INSERT INTO [tb_respuestas] VALUES(@codRespuestas,@descripcion,@correcta,@codPregunta);
+  END
+GO
+
+IF OBJECT_ID('SP_DeleteRespuesta') IS NOT NULL
+DROP PROCEDURE SP_DeleteRespuesta
+GO
+
+CREATE PROCEDURE SP_DeleteRespuesta
+@codRespuestas	INT
+AS
+BEGIN
+		SET NOCOUNT ON;
+		DELETE FROM [tb_respuestas] WHERE @codRespuestas = codRespuestas;
+END
+GO
+
+IF OBJECT_ID('SP_UpdateRespuestas') IS NOT NULL
+DROP PROCEDURE SP_UpdateRespuestas
+GO
+
+CREATE PROCEDURE SP_UpdateRespuestas
+@codRespuestas INT,
+@descripcion VARCHAR(255),
+@correcta BIT,
+@codPregunta INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE [tb_respuestas] SET descripcion = @descripcion,
+                  correcta = @correcta,
+                  codPregunta = @codPregunta
+                  WHERE codRespuestas = @codRespuestas
+END
+GO
+
+IF OBJECT_ID('SP_SelectRespuesta') IS NOT NULL
+DROP PROCEDURE SP_SelectRespuesta
+GO
+
+CREATE PROCEDURE SP_SelectRespuesta
+@codRespuestas	INT
+AS
+BEGIN
+		SET NOCOUNT ON;
+		SELECT * FROM [tb_respuestas] WHERE codRespuestas = @codRespuestas;
+END
+GO
+
+IF OBJECT_ID('SP_SelectRespuestaAll') IS NOT NULL
+DROP PROCEDURE SP_SelectRespuestaAll
+GO
+
+CREATE PROCEDURE SP_SelectRespuestaAll
+AS
+		SELECT * FROM [tb_respuestas];
+GO
+
+--Llaves Foraneas
 ALTER TABLE [tba_privilegios] ADD FOREIGN KEY ([codRol]) REFERENCES [tb_rol] ([codRol])
 GO
 
