@@ -36,6 +36,12 @@ namespace BackEnd_NuvisoftEducation
             services.AddSingleton<IConfiguration>(Configuration);
             Global.ConnectionString = Configuration.GetConnectionString("Nuvisoft_Educacion");
             services.AddScoped<IRolService, RolService>();
+            services.AddScoped<IPrivilegiosService, PrivilegiosService>();
+            services.AddScoped<IUsuarioService, UsuarioService>();
+            services.AddScoped<IColegioService, ColegioService>();
+            services.AddScoped<IAsignaturaService, AsignaturaService>();
+            services.AddScoped<IArancelesService, ArancelesService>();
+            services.AddScoped<IArancelesDetallesService, ArancelesDetallesService>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Nuvisoft Education Services ", Version = "v1" });

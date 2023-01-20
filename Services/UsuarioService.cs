@@ -130,7 +130,7 @@ namespace BackEnd_NuvisoftEducation.Services
                     if (conex.State == ConnectionState.Closed)
                     {
                         conex.Open();
-                        var oUsuarioUp = conex.Query<tb_rol>("SP_UpdateUsuario", this.setParameters(oUsuario), commandType: CommandType.StoredProcedure);
+                        var oUsuarioUp = conex.Query<tb_usuario>("SP_UpdateUsuario", this.setParameters(oUsuario), commandType: CommandType.StoredProcedure);
                     }
                 }
             }
