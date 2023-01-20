@@ -103,7 +103,7 @@ namespace BackEnd_NuvisoftEducation.Services
                     {
                         conex.Open();
                     }
-                    var oArancelesList = conex.Query<tb_aranceles>("SP_SelectColegioAll", commandType: CommandType.StoredProcedure).ToList();
+                    var oArancelesList = conex.Query<tb_aranceles>("SP_SelectArancelAll", commandType: CommandType.StoredProcedure).ToList();
 
                     if (oArancelesList != null && oArancelesList.Count() > 0)
                     {
@@ -129,7 +129,7 @@ namespace BackEnd_NuvisoftEducation.Services
                     if (conex.State == ConnectionState.Closed)
                     {
                         conex.Open();
-                        var oArancelUp = conex.Query<tb_rol>("SP_UpdateAranceles", this.setParameters(oArancel), commandType: CommandType.StoredProcedure);
+                        var oArancelUp = conex.Query<tb_aranceles>("SP_UpdateAranceles", this.setParameters(oArancel), commandType: CommandType.StoredProcedure);
                     }
                 }
             }

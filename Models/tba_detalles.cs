@@ -11,5 +11,6 @@ namespace BackEnd_NuvisoftEducation.Models
         public Boolean cancelacion { get; set; }
         public string concepto { get; set; }
         public int monto { get; set; }
+        public string Error { get; set; }
     }
 }
