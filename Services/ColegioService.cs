@@ -15,14 +15,14 @@ using System.Security.Cryptography;
 
 namespace BackEnd_NuvisoftEducation.Services
 {
-    public class UsuarioService : IUsuarioService
+    public class ColegioService : IColegioService
     {
-        tb_usuario _oUsuario = new tb_usuario();
-        List<tb_usuario> _oUsuarioList = new List<tb_usuario>();
+        tb_colegio _oColegio = new tb_colegio();
+        List<tb_colegio> _oColegioList = new List<tb_colegio>();
 
-        public tb_usuario AddUsuario(tb_usuario oUsuario)
+        public tb_colegio AddColegio(tb_colegio oColegio)
         {
-            _oUsuario = new tb_usuario();
+            _oColegio = new tb_colegio();
 
             try
             {
@@ -31,19 +31,19 @@ namespace BackEnd_NuvisoftEducation.Services
                     if (conex.State == ConnectionState.Closed)
                     {
                         conex.Open();
-                        var usuario = conex.Query<tb_usuario>("SP_InsertUsuario", this.setParameters(oUsuario),
+                        var usuario = conex.Query<tb_colegio>("SP_InsertColegio", this.setParameters(oColegio),
                             commandType: CommandType.StoredProcedure);
                     }
                 }
             }
             catch (Exception ex)
             {
-                _oUsuario.Error = ex.Message;
+                _oColegio.Error = ex.Message;
             }
-            return _oUsuario;
+            return _oColegio;
         }
 
-        public string DeleteUsuario(int usuarioId)
+        public string DeleteColegio(int colegioId)
         {
             try
             {
@@ -53,21 +53,21 @@ namespace BackEnd_NuvisoftEducation.Services
                     {
                         conex.Open();
                         var paramId = new DynamicParameters();
-                        paramId.Add("@codUsuario", usuarioId);
-                        conex.Query("SP_DeleteUsuario", paramId, commandType: CommandType.StoredProcedure).SingleOrDefault();
+                        paramId.Add("@codColegio", colegioId);
+                        conex.Query("SP_DeleteColegio", paramId, commandType: CommandType.StoredProcedure).SingleOrDefault();
                     }
                 }
             }
             catch (Exception ex)
             {
-                _oUsuario.Error = ex.Message;
+                _oColegio.Error = ex.Message;
             }
-            return _oUsuario.Error;
+            return _oColegio.Error;
         }
 
-        public tb_usuario GetUsuarioId(int usuarioId)
+        public tb_colegio GetColegioId(int colegioId)
         {
-            _oUsuario = new tb_usuario();
+            _oColegio = new tb_colegio();
             try
             {
                 using (IDbConnection conex = new SqlConnection(Global.ConnectionString))
@@ -77,25 +77,25 @@ namespace BackEnd_NuvisoftEducation.Services
                         conex.Open();
                     }
                     var paramId = new DynamicParameters();
-                    paramId.Add("@codUsuario", usuarioId);
-                    var oUsuarioId = conex.Query<tb_usuario>("SP_SelectPrivilegio", paramId, commandType: CommandType.StoredProcedure).ToList();
+                    paramId.Add("@codColegio", colegioId);
+                    var oColegioId = conex.Query<tb_colegio>("SP_SelectColegio", paramId, commandType: CommandType.StoredProcedure).ToList();
 
-                    if (oUsuarioId != null && oUsuarioId.Count() > 0)
+                    if (oColegioId != null && oColegioId.Count() > 0)
                     {
-                        _oUsuario = oUsuarioId.SingleOrDefault();
+                        _oColegio = oColegioId.SingleOrDefault();
                     }
                 }
             }
             catch (Exception ex)
             {
-                _oUsuario.Error = ex.Message;
+                _oColegio.Error = ex.Message;
             }
-            return _oUsuario;
+            return _oColegio;
         }
 
-        public List<tb_usuario> GetUsuarioList()
+        public List<tb_colegio> GetColegioList()
         {
-            _oUsuarioList = new List<tb_usuario>();
+            _oColegioList = new List<tb_colegio>();
             try
             {
                 using (IDbConnection conex = new SqlConnection(Global.ConnectionString))
@@ -104,24 +104,24 @@ namespace BackEnd_NuvisoftEducation.Services
                     {
                         conex.Open();
                     }
-                    var oUsuarioList = conex.Query<tb_usuario>("SP_SelectPrivilegiosAll", commandType: CommandType.StoredProcedure).ToList();
+                    var oColegioList = conex.Query<tb_colegio>("SP_SelectColegioAll", commandType: CommandType.StoredProcedure).ToList();
 
-                    if (oUsuarioList != null && oUsuarioList.Count() > 0)
+                    if (oColegioList != null && oColegioList.Count() > 0)
                     {
-                        _oUsuarioList = oUsuarioList;
+                        _oColegioList = oColegioList;
                     }
                 }
             }
             catch (Exception ex)
             {
-                _oUsuario.Error = ex.Message;
+                _oColegio.Error = ex.Message;
             }
-            return _oUsuarioList;
+            return _oColegioList;
         }
 
-        public tb_usuario UpdateUsuario(tb_usuario oUsuario)
+        public tb_colegio UpdateColegio(tb_colegio oColegio)
         {
-            _oUsuario = new tb_usuario();
+            _oColegio = new tb_colegio();
 
             try
             {
@@ -130,32 +130,31 @@ namespace BackEnd_NuvisoftEducation.Services
                     if (conex.State == ConnectionState.Closed)
                     {
                         conex.Open();
-                        var oUsuarioUp = conex.Query<tb_rol>("SP_UpdateUsuario", this.setParameters(oUsuario), commandType: CommandType.StoredProcedure);
+                        var oColegioUp = conex.Query<tb_rol>("SP_UpdateColegio", this.setParameters(oColegio), commandType: CommandType.StoredProcedure);
                     }
                 }
             }
             catch (Exception ex)
             {
-                _oUsuario.Error = ex.Message;
+                _oColegio.Error = ex.Message;
             }
-            return _oUsuario;
+            return _oColegio;
         }
-
-        private DynamicParameters setParameters(tb_usuario oUsuario)
+        private DynamicParameters setParameters(tb_colegio oColegio)
         {
             DynamicParameters parameters = new DynamicParameters();
 
-            if (oUsuario.codUsuario != 0)
+            if (oColegio.codColegio != 0)
             {
-                parameters.Add("@codUsuario", oUsuario.codUsuario);
+                parameters.Add("@codColegio", oColegio.codColegio);
             }
-            parameters.Add("@codColegio", oUsuario.codColegio);
-            parameters.Add("@nombres", oUsuario.nombres);
-            parameters.Add("@apellidos", oUsuario.apellidos);
-            parameters.Add("@email", oUsuario.email);
-            parameters.Add("@usuario", oUsuario.usuario);
-            parameters.Add("@contrasena", oUsuario.contrasena);
-            parameters.Add("@dni", oUsuario.dni);
+            parameters.Add("@nombre", oColegio.nombre);
+            parameters.Add("@descripcion", oColegio.descripcion);
+            parameters.Add("@ubicacion", oColegio.ubicacion);
+            parameters.Add("@direccion", oColegio.direccion);
+            parameters.Add("@logotipo", oColegio.logotipo);
+            parameters.Add("@correo", oColegio.correo);
+            parameters.Add("@telefono", oColegio.telefono);
             return parameters;
         }
     }

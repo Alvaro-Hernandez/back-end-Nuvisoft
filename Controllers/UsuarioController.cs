@@ -58,7 +58,7 @@ namespace BackEnd_NuvisoftEducation.Controllers
         {
             if (id != 0)
             {
-                _oUsuarioService.GetUsuarioId(id);
+                _oUsuarioService.DeleteUsuario(id);
             }
         }
     }

@@ -10,5 +10,6 @@
         public string logotipo { get; set; }
         public string correo { get; set; }
         public string telefono { get; set; }
+        public string Error { get; set; }
     }
 }
