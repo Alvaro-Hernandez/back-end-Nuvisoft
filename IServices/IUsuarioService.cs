@@ -9,6 +9,6 @@ namespace BackEnd_NuvisoftEducation.IServices
         List<tb_usuario> GetUsuarioList();
         tb_usuario GetUsuarioId(int usuarioId);
         string DeleteUsuario(int usuarioId);
-        tb_usuario UpdateRol(tb_usuario oUsuario);
+        tb_usuario UpdateUsuario(tb_usuario oUsuario);
     }
 }
