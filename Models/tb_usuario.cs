@@ -10,5 +10,6 @@
         public string usuario { get; set; }
         public string contrasena { get; set; }
         public string dni { get; set; }
+        public string Error { get; set; }
     }
 }
