@@ -4,15 +4,6 @@
     {
         public int codHorario { get; set; }
         public string nombre { get; set; }
-        public modalidad modalidad { get; set; }
-    }
-
-    public enum modalidad
-    {
-        matutino,
-        vespertino,
-        nocturno,
-        sabatino,
-        dominical
+        public string modalidad { get; set; }
     }
 }

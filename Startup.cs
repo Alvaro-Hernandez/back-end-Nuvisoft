@@ -1,14 +1,22 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using BackEnd_NuvisoftEducation.Conexion;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Data.Common;
+using BackEnd_NuvisoftEducation.IServices;
+using BackEnd_NuvisoftEducation.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BackEnd_NuvisoftEducation.Conexion;
+using Microsoft.Extensions.Logging;
+using Swashbuckle.AspNetCore.Swagger;
+using BackEnd_NuvisoftEducation.Models;
 
 namespace BackEnd_NuvisoftEducation
 {
@@ -27,11 +35,28 @@ namespace BackEnd_NuvisoftEducation
             services.AddControllers();
             services.AddSingleton<IConfiguration>(Configuration);
             Global.ConnectionString = Configuration.GetConnectionString("Nuvisoft_Educacion");
+            services.AddScoped<IRolService, RolService>();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Nuvisoft Education Services ", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors(x => x
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .SetIsOriginAllowed(origin => true));
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "MySolution V1");
+                c.RoutePrefix = string.Empty;
+            });
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -52,7 +77,7 @@ namespace BackEnd_NuvisoftEducation
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapRazorPages();
+                endpoints.MapControllers();
             });
         }
     }

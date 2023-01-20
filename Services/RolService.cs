@@ -10,6 +10,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using BackEnd_NuvisoftEducation.Conexion;
+using System.Net;
 
 namespace BackEnd_NuvisoftEducation.Services
 {
@@ -93,12 +94,50 @@ namespace BackEnd_NuvisoftEducation.Services
 
         public List<tb_rol> GetRolList()
         {
-            throw new NotImplementedException();
+            _oRolList = new List<tb_rol>();
+            try
+            {
+                using(IDbConnection conex = new SqlConnection(Global.ConnectionString))
+                {
+                    if(conex.State == ConnectionState.Closed)
+                    {
+                        conex.Open();
+                    }
+                    var oRolList = conex.Query<tb_rol>("SP_SelectRolAll", commandType: CommandType.StoredProcedure).ToList();
+
+                    if(oRolList != null && oRolList.Count() > 0)
+                    {
+                        _oRolList = oRolList;
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                _oRol.Error = ex.Message;
+            }
+            return _oRolList;
         }
 
         public tb_rol UpdateRol(tb_rol oRol)
         {
-            throw new NotImplementedException();
+            _oRol = new tb_rol();
+
+            try
+            {
+                using(IDbConnection conex = new SqlConnection(Global.ConnectionString))
+                {
+                    if(conex.State == ConnectionState.Closed)
+                    {
+                        conex.Open();
+                        var oRolUp = conex.Query<tb_rol>("SP_UpdateRol", this.setParameters(oRol), commandType: CommandType.StoredProcedure);
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                _oRol.Error = ex.Message;
+            }
+            return _oRol;
         }
 
         private DynamicParameters setParameters(tb_rol oRol)
@@ -107,10 +146,10 @@ namespace BackEnd_NuvisoftEducation.Services
 
             if(oRol.codRol != 0) 
             {
-                parameters.Add("codRol", oRol.codRol);
+                parameters.Add("@codRol", oRol.codRol);
             }
 
-            parameters.Add("@@rol", oRol.rol);
+            parameters.Add("@rol", oRol.rol);
             return parameters;
         }
     }
